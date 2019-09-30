@@ -13,11 +13,73 @@ class BSTNode {
     BSTNode<Data>* parent;
     Data const data;  // the const Data in this node.
 
-    /** TODO */
-    BSTNode(const Data& d) : data(d) {}
+    /* 
+     * Constructor to initialize BSTNode with no parent or children
+     */
+    BSTNode(const Data& d) : data(d) {
+	    left = 0;
+	    right = 0;
+	    parent = 0;
+    }
 
-    /** TODO */
-    BSTNode<Data>* successor() { return 0; }
+    /*
+     * Function name: successor()
+     * Functionprototype: BSTNode<Data> * successor()
+     * Description: Find the successor of the BST, meaning the smallest element 
+     * 	             that is larger than this BSTNode
+     * Return: BSTNode<Data> is the successor, or nullptr if no successor
+     */
+    BSTNode<Data>* successor() {
+	
+	    //if the node has right subtree,find least value of node from that right subtree
+		
+	    if( right != 0){
+
+		    BSTNode<Data> * temp  = right;
+		    //move until most left node  of right tree
+		    while(temp.left != 0){
+			    temp = temp.left;
+		    }
+
+		    if(temp.data == data){
+			    return nullptr;
+		    }
+		    else{
+			return temp;
+		    }
+	    }
+	    else{
+
+	    //if node has no right tree, start from root, successor is node from where 
+	    //we take the last left turn 
+
+ 		BSTNode<Data> * temp = data;
+		while(temp.parent != 0){
+			temp = temp.parent;
+		}
+		
+		//now temp = root node
+		BSTNode<Data> * store;
+
+		while( temp.data != data){
+			if( data <= temp.data){
+				store = temp;
+				temp = temp.left;
+			}
+			else{
+				temp = temp.right;
+			}
+		}
+
+		if( store.data == data){
+			return nullptr;
+		}
+		else{
+			return store;
+		}
+	    }
+    
+    }
 };
 
 /** DO NOT CHANGE THIS METHOD
