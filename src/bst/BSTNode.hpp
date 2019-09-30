@@ -1,3 +1,9 @@
+/*
+ * Author: Kimiya Ataiyan
+ * Date: 9/30/19
+ * UserID: kataiyan
+ * Filename: BSTNode.hpp
+ */
 #ifndef BSTNODE_HPP
 #define BSTNODE_HPP
 #include <iomanip>
