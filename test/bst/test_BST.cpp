@@ -58,4 +58,13 @@ TEST_F(SmallBSTFixture, SMALL_INSERT_DUPLICATES_TEST) {
     ASSERT_FALSE(bst.insert(3));
 }
 
-// TODO: add more BST tests here
+TEST_F(SmallBSTFixture, SMALL_INSERT_NORMAL_TEST){
+	//assert that insertion works fine
+	ASSERT_TRUE(bst.insert(101));
+}
+TEST_F(SmallBSTFixture, SMALL_SIZE_TEST2){
+	//assert that the small BST has  correct size after insertion
+	ASSERT_EQ(bst.size(), 6)
+}
+
+// ADD MORE TESTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

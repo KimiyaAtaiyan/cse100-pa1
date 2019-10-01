@@ -1,3 +1,11 @@
+/*
+ * Author: Kimiya Ataiyan 
+ * UserID: kataiyan
+ * Date: 9/30/19
+ * Filename: BSTIterator.hpp
+ * Source of help: tutors in lab
+ */
+
 #ifndef BSTITERATOR_HPP
 #define BSTITERATOR_HPP
 #include <iterator>
@@ -32,11 +40,15 @@ class BSTIterator : public iterator<input_iterator_tag, Data> {
         return before;
     }
 
-    /** TODO */
-    bool operator==(BSTIterator<Data> const& other) const { return false; }
+    bool operator==(BSTIterator<Data> const& other) const { 
+  
+	 return curr == other.curr; 
+    }
 
-    /** TODO */
-    bool operator!=(BSTIterator<Data> const& other) const { return false; }
+    bool operator!=(BSTIterator<Data> const& other) const { 
+   
+	    return curr != other.curr;
+    }
 };
 
 #endif  // BSTITERATOR_HPP

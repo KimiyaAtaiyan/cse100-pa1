@@ -1,3 +1,11 @@
+/*
+ * Author: Kimiya Ataiyan 
+ * UserID: kataiyan
+ * Date: 10/1/19
+ * Filename: BST.hpp
+ * Source of help: tutors in Lab 
+ */
+
 #ifndef BST_HPP
 #define BST_HPP
 #include <iostream>
@@ -8,66 +16,243 @@ using namespace std;
 
 template <typename Data>
 class BST {
-  protected:
-    // pointer to the root of this BST, or 0 if the BST is empty
-    BSTNode<Data>* root;
+	protected:
+		// pointer to the root of this BST, or 0 if the BST is empty
+		BSTNode<Data>* root;
 
-    // number of Data items stored in this BST.
-    unsigned int isize;
+		// number of Data items stored in this BST.
+		unsigned int isize;
 
-    // height of this BST.
-    int iheight;
+		// height of this BST.
+		int iheight;
 
-  public:
-    /** Define iterator as an aliased typename for BSTIterator<Data>. */
-    typedef BSTIterator<Data> iterator;
+	public:
+		/** Define iterator as an aliased typename for BSTIterator<Data>. */
+		typedef BSTIterator<Data> iterator;
 
-    /** Default constructor.
-     *  Initialize an empty BST.
-     */
-    BST() : root(0), isize(0), iheight(-1) {}
+		/** Default constructor.
+		 *  Initialize an empty BST.
+		 */
+		BST() : root(0), isize(0), iheight(-1) {}
 
-    /** TODO */
-    virtual ~BST() { deleteAll(root); }
+		/** TODO */
+		virtual ~BST() { deleteAll(root); }
 
-    /** TODO */
-    virtual bool insert(const Data& item) { return false; }
+		/* 
+		 * Function name: insert(const Data&item)
+		 * Function prototype: virtual bool insert(const Data& item)
+		 * Definition: insert a copy of item into BST tree if not duplicate
+		 * Return: return true if inserted, return false if not inserted
+		 */
 
-    /** TODO */
-    virtual iterator find(const Data& item) const { return 0; }
+		virtual bool insert(const Data& item) {
 
-    /** TODO */
-    unsigned int size() const { return 0; }
+			//start at root node and iterate through RHS or LHS of tree 
+			if( root != 0){
 
-    /** TODO */
-    int height() const { return 0; }
+				BSTNode<Data>* temp = root;	
+				int height = 0;
 
-    /** TODO */
-    bool empty() const { return false; }
+				while(height <= iheight){
 
-    /** TODO */
-    iterator begin() const { return BST::iterator(first(root)); }
+					//iterate through LHS
+					if(item < temp->data){
 
-    /** Return an iterator pointing past the last item in the BST.
-     */
-    iterator end() const { return typename BST<Data>::iterator(0); }
+						if(temp->left == 0){
+							temp->left = new BSTNode(item);
+							temp->left->parent = temp;
+							isize++;
+							if(height == iheight){
+								iheight++;
+							}
+							return true;
+						}
+						else{
+							temp = temp->left;
+						}
 
-    /** TODO */
-    vector<Data> inorder() const {}
+					}
+					else if( temp->data < item){	//iterate through RHS
 
-  private:
-    /** TODO */
-    static BSTNode<Data>* first(BSTNode<Data>* root) { return 0; }
+						if(temp->right == 0){
+							temp->right = new BSTNode(item);
+							temp->right->parent = temp;
+							isize++;
+							if(height == iheight){
+								iheight++;
+							}
+							return true;
+						}
+						else{
+							temp = temp->right;
+						}
+					}
+					else{
+						return false;
 
-    /** TODO */
-    static void deleteAll(BSTNode<Data>* n) {
-        /* Pseudocode:
-           if current node is null: return;
-           recursively delete left sub-tree
-           recursively delete right sub-tree
-           delete current node
-        */
-    }
+					}
+					height++;
+				}
+
+			}
+			else{	//set root to 1 if first element inserted
+
+				root->data = new BSTNode(item);
+				isize++;
+				iheight = 0;
+				return true;
+
+			}
+		}
+
+		/*
+		 * Function name: find(const Data& item)
+		 * Function Prototype: virtual iterator find(const Data& item) const
+		 * Description: looks for an item in a BST tree and returns iterator pointing to that item
+		 * Return: iterator pointing to found node or nullptr if not found
+		 */
+
+		virtual iterator find(const Data& item) const { 
+
+			//compare to root to decide whether to iterate through LHS or RHS
+
+			//iterate through LHS
+			BSTNode<Data> * temp = root;
+			int height = 0;
+			bool found = false;
+
+			while(height <= iheight){
+				if( item < temp->data){
+
+					temp = temp->left;
+					if(temp->data == item){
+						found = true;
+						return BSTIterator(temp);
+					}
+				}
+				else if( temp->data < item){ 	//iterate through LHS
+
+					temp = temp->right;
+					if(temp->data == item){
+						found = true;
+						return BSTIterator(temp);
+					}
+				}
+				else{	//if root is item
+				        found = true;
+					return BSTIterator(temp);
+
+				}
+
+			}
+
+			if(found == false){
+				return BSTIterator(nullptr);
+			}
+		}
+		
+		/*
+		 * Function name: size
+		 * Functin prototype: unsigned int size() const
+		 * Description: returns size of BST which is # of nodes
+		 * Return: unsigned int
+		 */
+		unsigned int size() const { 
+
+			return isize;	
+		}
+
+		/*
+		 * Function name: height
+		 * Function prototype: int height() const
+		 * Description: returns height of the tree
+		 * Return: int
+		 */
+		int height() const { 
+
+			return iheight;	
+		}
+
+		/*
+		 * Function name: empty 
+		 * Function Prototype: bool empty() const
+		 * Description: checks if BST is empty 
+		 * Return: true if no nodes in tree,false otherwise
+		 */
+		bool empty() const { 
+		
+			if(isize == 0){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+
+		/** TODO */
+		iterator begin() const { return BST::iterator(first(root)); }
+
+		/** Return an iterator pointing past the last item in the BST.
+		*/
+		iterator end() const { 
+			
+			
+			
+			
+			return typename BST<Data>::iterator(0); 
+		
+		
+		}
+
+		/** TODO */
+		vector<Data> inorder() const {
+	
+		//inorder traversal collection : Left, Root, Right
+				
+		vector<Data> list;	
+	/*	BSTNode<Data> *temp = root;
+		BSTNode<Data> *temp2;
+		bool LHSDone = false;
+
+		while(temp != NULL){
+			
+			if(!LHSDone){
+				while(temp->left != 0){
+					temp = temp->left;
+				}
+			}
+
+			list.push_back(temp->data);
+			LHSDone = true;
+				
+			//check if right child exists 
+			if(temp->right != 0){
+				LHSDone = false;
+				temp = temp->right;
+			}
+			else if(temp->parent != 0){   //if right child doesnt exist, move to parent
+
+				while(temp->parent != 0 && temp == temp->parent->right){
+
+					temp = temp->parent;
+	*/			
+			return list;
+		}
+
+
+	private:
+		/** TODO */
+		static BSTNode<Data>* first(BSTNode<Data>* root) { return 0; }
+
+		/** TODO */
+		static void deleteAll(BSTNode<Data>* n) {
+			/* Pseudocode:
+			   if current node is null: return;
+			   recursively delete left sub-tree
+			   recursively delete right sub-tree
+			   delete current node
+			   */
+		}
 };
 
 #endif  // BST_HPP
