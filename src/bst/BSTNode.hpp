@@ -38,16 +38,15 @@ class BSTNode {
     BSTNode<Data>* successor() {
 	
 	    //if the node has right subtree,find least value of node from that right subtree
-		
 	    if( right != 0){
 
 		    BSTNode<Data> * temp  = right;
 		    //move until most left node  of right tree
-		    while(temp.left != 0){
-			    temp = temp.left;
+		    while(temp->left != 0){
+			    temp = temp->left;
 		    }
 
-		    if(temp.data == data){
+		    if(temp->data == data){
 			    return nullptr;
 		    }
 		    else{
@@ -55,36 +54,43 @@ class BSTNode {
 		    }
 	    }
 	    else{
+	    //if node has no right tree, iterate backwards
 
-	    //if node has no right tree, start from root, successor is node from where 
-	    //we take the last left turn 
+ 		BSTNode<Data> * temp = this;
 
- 		BSTNode<Data> * temp = data;
-		while(temp.parent != 0){
-			temp = temp.parent;
+		while(temp->parent != 0){
+
+			temp = temp->parent;
+
+			if( data < temp->data){
+				return temp;
+			}
 		}
-		
-		//now temp = root node
-		BSTNode<Data> * store;
 
-		while( temp.data != data){
-			if( data <= temp.data){
+		return nullptr;
+	
+
+		//now temp = root node
+		/*BSTNode<Data> * store = temp;
+
+		while( temp->data != data){
+			if( data <= temp->data){
 				store = temp;
-				temp = temp.left;
+				temp = temp->left;
 			}
 			else{
-				temp = temp.right;
+				temp = temp->right;
 			}
 		}
 
-		if( store.data == data){
+		if( store->data == data){
 			return nullptr;
 		}
 		else{
 			return store;
-		}
+		}*/
 	    }
-    
+			
     }
 };
 

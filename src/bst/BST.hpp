@@ -59,7 +59,7 @@ class BST {
 					if(item < temp->data){
 
 						if(temp->left == 0){
-							temp->left = new BSTNode(item);
+							temp->left = new BSTNode<Data>(item);
 							temp->left->parent = temp;
 							isize++;
 							if(height == iheight){
@@ -75,7 +75,7 @@ class BST {
 					else if( temp->data < item){	//iterate through RHS
 
 						if(temp->right == 0){
-							temp->right = new BSTNode(item);
+							temp->right = new BSTNode<Data>(item);
 							temp->right->parent = temp;
 							isize++;
 							if(height == iheight){
@@ -97,7 +97,7 @@ class BST {
 			}
 			else{	//set root to 1 if first element inserted
 
-				root->data = new BSTNode(item);
+				root = new BSTNode<Data>(item);
 				isize++;
 				iheight = 0;
 				return true;
@@ -127,7 +127,7 @@ class BST {
 					temp = temp->left;
 					if(temp->data == item){
 						found = true;
-						return BSTIterator(temp);
+						return BSTIterator<Data>(temp);
 					}
 				}
 				else if( temp->data < item){ 	//iterate through LHS
@@ -135,22 +135,22 @@ class BST {
 					temp = temp->right;
 					if(temp->data == item){
 						found = true;
-						return BSTIterator(temp);
+						return BSTIterator<Data>(temp);
 					}
 				}
 				else{	//if root is item
-				        found = true;
-					return BSTIterator(temp);
+					found = true;
+					return BSTIterator<Data>(temp);
 
 				}
 
 			}
 
 			if(found == false){
-				return BSTIterator(nullptr);
+				return BSTIterator<Data>(nullptr);
 			}
 		}
-		
+
 		/*
 		 * Function name: size
 		 * Functin prototype: unsigned int size() const
@@ -180,7 +180,7 @@ class BST {
 		 * Return: true if no nodes in tree,false otherwise
 		 */
 		bool empty() const { 
-		
+
 			if(isize == 0){
 				return true;
 			}
@@ -195,54 +195,75 @@ class BST {
 		/** Return an iterator pointing past the last item in the BST.
 		*/
 		iterator end() const { 
-			
-			
-			
-			
+
 			return typename BST<Data>::iterator(0); 
-		
-		
+
 		}
 
 		/** TODO */
 		vector<Data> inorder() const {
-	
-		//inorder traversal collection : Left, Root, Right
-				
-		vector<Data> list;	
-	/*	BSTNode<Data> *temp = root;
-		BSTNode<Data> *temp2;
-		bool LHSDone = false;
 
-		while(temp != NULL){
-			
-			if(!LHSDone){
-				while(temp->left != 0){
-					temp = temp->left;
+			//inorder traversal collection : Left, Root, Right
+
+			vector<Data> list;	
+			BSTNode<Data> *temp = root;
+			BSTNode<Data> *temp2;
+			bool LHSDone = false;
+
+
+			while(temp != NULL){
+
+				if(temp->left == 0){
+
+					list.push_back(temp->data);
+					temp = temp -> right;
+				}
+				else{
+					//make temp2 the right child of the right most node in LHS	
+
+					temp2 = temp->left;
+					while(temp2->right != 0 && temp2->right != temp){
+
+						temp2 = temp2->right;
+					}
+
+					if( temp2->right == 0){
+						temp2->right = temp;
+						temp = temp->left;
+					}
+					else{
+						temp2->right = 0;
+						list.push_back(temp->data);
+						temp = temp->right;
+					}
 				}
 			}
 
-			list.push_back(temp->data);
-			LHSDone = true;
-				
-			//check if right child exists 
-			if(temp->right != 0){
-				LHSDone = false;
-				temp = temp->right;
-			}
-			else if(temp->parent != 0){   //if right child doesnt exist, move to parent
 
-				while(temp->parent != 0 && temp == temp->parent->right){
 
-					temp = temp->parent;
-	*/			
 			return list;
 		}
 
 
 	private:
-		/** TODO */
-		static BSTNode<Data>* first(BSTNode<Data>* root) { return 0; }
+
+		static BSTNode<Data>* first(BSTNode<Data>* root) {
+
+
+			BSTNode<Data> * temp = root;
+
+			if(root == NULL){
+				return nullptr;
+			}
+
+			while(temp->left != 0){
+				temp = temp->left;
+			}
+
+			return temp;
+
+
+		}
 
 		/** TODO */
 		static void deleteAll(BSTNode<Data>* n) {
