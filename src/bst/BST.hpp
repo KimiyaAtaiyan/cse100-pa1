@@ -207,41 +207,30 @@ class BST {
 
 			vector<Data> list;	
 			BSTNode<Data> *temp = root;
-			BSTNode<Data> *temp2;
-			bool LHSDone = false;
 
-
-			while(temp != NULL){
-
-				if(temp->left == 0){
-
-					list.push_back(temp->data);
-					temp = temp -> right;
-				}
-				else{
-					//make temp2 the right child of the right most node in LHS	
-
-					temp2 = temp->left;
-					while(temp2->right != 0 && temp2->right != temp){
-
-						temp2 = temp2->right;
-					}
-
-					if( temp2->right == 0){
-						temp2->right = temp;
-						temp = temp->left;
-					}
-					else{
-						temp2->right = 0;
-						list.push_back(temp->data);
-						temp = temp->right;
-					}
-				}
-			}
-
-
+			list = inorderHelper(temp);
 
 			return list;
+		}
+
+		vector<Data> inorderHelper(BSTNode<Data>* node){
+			
+			vector<Data> traversal;
+
+			if(node->left != 0){
+
+				inorderHelper(node->left);
+			}
+
+			traversal.push_back(node->data);
+
+			if( node->right != 0){
+
+				inorderHelper(node->right);
+			}
+
+			return traversal;
+
 		}
 
 
@@ -273,6 +262,23 @@ class BST {
 			   recursively delete right sub-tree
 			   delete current node
 			   */
+
+			if(n == NULL){
+				return;
+			}
+			else{
+
+			  	if(n->left != 0){
+					n = n->left;
+					deleteAll(n);
+				}
+				else if(n->right != 0){
+					n= n->right;
+					deleteAll(n);
+				}
+				else{
+					deleteAll(n);
+				}
 		}
 };
 

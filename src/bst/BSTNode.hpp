@@ -70,25 +70,7 @@ class BSTNode {
 		return nullptr;
 	
 
-		//now temp = root node
-		/*BSTNode<Data> * store = temp;
 
-		while( temp->data != data){
-			if( data <= temp->data){
-				store = temp;
-				temp = temp->left;
-			}
-			else{
-				temp = temp->right;
-			}
-		}
-
-		if( store->data == data){
-			return nullptr;
-		}
-		else{
-			return store;
-		}*/
 	    }
 			
     }
