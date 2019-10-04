@@ -38,6 +38,10 @@ class BSTNode {
     BSTNode<Data>* successor() {
 	
 	    //if the node has right subtree,find least value of node from that right subtree
+
+	    if(this->data == NULL){
+		    return nullptr;
+	    }
 	    if( right != 0){
 
 		    BSTNode<Data> * temp  = right;

@@ -63,8 +63,29 @@ TEST_F(SmallBSTFixture, SMALL_INSERT_NORMAL_TEST){
 	ASSERT_TRUE(bst.insert(101));
 }
 TEST_F(SmallBSTFixture, SMALL_SIZE_TEST2){
+
 	//assert that the small BST has  correct size after insertion
-	ASSERT_EQ(bst.size(), 6)
+	ASSERT_TRUE(bst.insert(40));
+	ASSERT_EQ(bst.size(), 6); 
+}
+
+TEST_F(SmallBSTFixture, IN_ORDER_TRAVERSAL){
+
+	vector<int> list{-33,1,3,4,100};
+	ASSERT_EQ(bst.inorder(), list);
+}
+
+TEST_F(SmallBSTFixture, INSERT_LEFT_SIDE){
+
+	ASSERT_TRUE(bst.insert(2));
+}
+
+TEST_F(SmallBSTFixture, TEST_FIND1){
+
+ 	BSTIterator<Data> * iter = new BSTIterator(bst.root);
+
+	ASSERT_EQ( bst.find( bst.root.data, iter);
+
 }
 
 // ADD MORE TESTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

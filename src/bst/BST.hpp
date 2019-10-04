@@ -35,8 +35,13 @@ class BST {
 		 */
 		BST() : root(0), isize(0), iheight(-1) {}
 
-		/** TODO */
-		virtual ~BST() { deleteAll(root); }
+
+
+		virtual ~BST() {
+			
+			deleteAll(root); 
+		
+		}
 
 		/* 
 		 * Function name: insert(const Data&item)
@@ -78,6 +83,7 @@ class BST {
 							temp->right = new BSTNode<Data>(item);
 							temp->right->parent = temp;
 							isize++;
+							//if new row started, increment height
 							if(height == iheight){
 								iheight++;
 							}
@@ -86,7 +92,7 @@ class BST {
 						else{
 							temp = temp->right;
 						}
-					}
+					}//if duplicate, return false
 					else{
 						return false;
 
@@ -95,7 +101,7 @@ class BST {
 				}
 
 			}
-			else{	//set root to 1 if first element inserted
+			else{	//set height to 0 if first element inserted
 
 				root = new BSTNode<Data>(item);
 				isize++;
@@ -200,7 +206,13 @@ class BST {
 
 		}
 
-		/** TODO */
+		/*
+		 * Function name: inorder
+		 * Function Prototype: vector<Data> inorder() const
+		 * Description: uses the helper method inorderHelper to return a vector list 
+		 * 		of the values in the BST in in order traversal
+		 * Return: vector with data of each node
+		 */
 		vector<Data> inorder() const {
 
 			//inorder traversal collection : Left, Root, Right
@@ -254,7 +266,6 @@ class BST {
 
 		}
 
-		/** TODO */
 		static void deleteAll(BSTNode<Data>* n) {
 			/* Pseudocode:
 			   if current node is null: return;
@@ -277,7 +288,7 @@ class BST {
 					deleteAll(n);
 				}
 				else{
-					deleteAll(n);
+					delete n;
 				}
 		}
 };
