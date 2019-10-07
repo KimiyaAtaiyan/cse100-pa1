@@ -220,28 +220,27 @@ class BST {
 			vector<Data> list;	
 			BSTNode<Data> *temp = root;
 
-			list = inorderHelper(temp);
+			list = inorderHelper(temp, list);
 
 			return list;
 		}
 
-		vector<Data> inorderHelper(BSTNode<Data>* node){
+		vector<Data> inorderHelper(BSTNode<Data>* node, vector<Data> list){
 			
-			vector<Data> traversal;
 
 			if(node->left != 0){
 
-				inorderHelper(node->left);
+				inorderHelper(node->left, list);
 			}
 
-			traversal.push_back(node->data);
+			list.push_back(node->data);
 
 			if( node->right != 0){
 
-				inorderHelper(node->right);
+				inorderHelper(node->right, list);
 			}
 
-			return traversal;
+			return list;
 
 		}
 
